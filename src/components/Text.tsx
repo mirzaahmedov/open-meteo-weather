@@ -1,18 +1,38 @@
 import { BaseHTMLAttributes, ElementType, ReactNode } from "react";
-import styled, { StyledProps } from "styled-components";
+import styled, { css, StyledProps } from "styled-components";
 
-type FontSize = "small" | "normal" | "medium" | "large" | "xlarge";
-type FontWeight = "light" | "normal" | "medium" | "bold";
+const sizes = {
+  sm: "0.75rem",
+  bs: "1rem",
+  md: "1.5rem",
+  lg: "2rem",
+  xl: "4rem",
+};
+const weights = {
+  normal: 400,
+  medium: 500,
+  bold: 700,
+};
 
-type TextVairants = `${FontSize}/${FontWeight}`;
+type Variants = `${keyof typeof sizes}-${keyof typeof weights}`;
 
 type Props = {
-  vairant?: TextVairants;
+  variant?: Variants;
   children?: ReactNode;
   as?: ElementType;
 };
 
-const Element = styled.p``;
+const Element = styled.p<Props>`
+  ${({ variant }) => {
+    const [size, weight] =
+      (variant?.split("-") as [keyof typeof sizes, keyof typeof weights]) ?? [];
+
+    return css`
+      font-size: ${sizes[size]};
+      font-weight: ${weights[weight]};
+    `;
+  }};
+`;
 
 const Text = ({
   children,

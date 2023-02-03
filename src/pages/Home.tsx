@@ -3,7 +3,10 @@ import Text from "@/components/Text";
 const Home = () => {
   return (
     <div>
-      <Text vairant="normal/medium">Text</Text>
+      <Text variant="bs-bold">Text</Text>
+      <Text as="h1" variant="xl-bold">
+        Heading
+      </Text>
     </div>
   );
 };
