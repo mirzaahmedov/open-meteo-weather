@@ -10,6 +10,11 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+  input,
+  button,
+  textarea {
+    font: inherit;
+  }
   html,
   body,
   #root {
