@@ -1,5 +1,5 @@
 import { BaseHTMLAttributes, ElementType, ReactNode } from "react";
-import styled, { css, StyledProps } from "styled-components";
+import styled, { css } from "styled-components";
 
 const sizes = {
   sm: "0.75rem",
