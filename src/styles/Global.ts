@@ -10,9 +10,18 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
   html {
     font-size: 16px;
     font-family: 'Inter', sans-serif;
+  }
+  body {
+    color: ${({ theme }) => theme.colors.white.main};
+    background-color: ${({ theme }) => theme.colors.blue[500]};
   }
 `;
 
