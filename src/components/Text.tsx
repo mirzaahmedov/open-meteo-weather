@@ -14,7 +14,9 @@ const weights = {
   bold: 700,
 };
 
-type Variants = `${keyof typeof sizes}-${keyof typeof weights}`;
+type Size = keyof typeof sizes;
+type Weight = keyof typeof weights;
+type Variants = `${Size}-${Weight}`;
 
 type Props = {
   variant?: Variants;
@@ -24,8 +26,7 @@ type Props = {
 
 const Element = styled.p<Props>`
   ${({ variant }) => {
-    const [size, weight] =
-      (variant?.split("-") as [keyof typeof sizes, keyof typeof weights]) ?? [];
+    const [size, weight] = (variant?.split("-") as [Size, Weight]) ?? [];
 
     return css`
       font-size: ${sizes[size]};
