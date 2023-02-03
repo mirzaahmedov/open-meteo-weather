@@ -1,13 +1,18 @@
+import styled from "styled-components";
 import Text from "@/components/Text";
+
+const Container = styled.div`
+  display: flex;
+`;
 
 const Home = () => {
   return (
-    <div>
+    <Container>
       <Text variant="bs-bold">Text</Text>
       <Text as="h1" variant="xl-bold">
         Heading
       </Text>
-    </div>
+    </Container>
   );
 };
 
