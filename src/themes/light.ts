@@ -4,7 +4,7 @@ const theme: DefaultTheme = {
   colors: {
     white: {
       main: "rgba(255, 255, 255)",
-      transparent: "rgba(255, 255, 255, 0.5)",
+      transparent: "rgba(255, 255, 255, 0.25)",
     },
     blue: {
       200: "rgb(191, 219, 254)",

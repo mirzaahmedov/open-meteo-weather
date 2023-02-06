@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 
 const sizes = {
   sm: "0.75rem",
-  bs: "1rem",
+  bs: "0.875rem",
   md: "1.5rem",
   lg: "2rem",
   xl: "4rem",
