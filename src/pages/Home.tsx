@@ -8,6 +8,7 @@ import Chart from "@/components/Chart";
 
 import { LocationIcon } from "@/assets/icons";
 import { getTodaysWeather } from "@/api/queries/forecast";
+import Card from "@/components/Card";
 
 const Container = styled.div`
   padding: 2.5rem;
@@ -79,6 +80,17 @@ const Home = () => {
             {data ? formatter.format(data.hourly.temperature_2m[0]) : null}°
           </Text>
         </WeatherToday>
+        <Card
+          variant="sm"
+          data={{
+            date: "Mon, 4 Nov",
+            temperature: {
+              daytime: "+19",
+              evening: "-1",
+            },
+            weatherType: "cloudy",
+          }}
+        />
       </Container>
       <Chart />
     </>
