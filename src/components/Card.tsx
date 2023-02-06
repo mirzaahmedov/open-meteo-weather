@@ -66,6 +66,7 @@ const Card = (props: Props) => {
           </Text>
           <Text>{data.temperature.evening}</Text>
         </Temperature>
+        {/* temp */}
       </Flex>
     </CardContainer>
   );
