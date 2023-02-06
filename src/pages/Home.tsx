@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
+import Flex from "@/components/Flex";
 import TextField from "@/components/Textfield";
 import Text from "@/components/Text";
+import Chart from "@/components/Chart";
 
 import { LocationIcon } from "@/assets/icons";
 import { getTodaysWeather } from "@/api/queries/forecast";
@@ -19,12 +21,17 @@ const WeatherToday = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 `;
 const Image = styled.img`
   display: block;
   width: 100%;
   max-width: 150px;
 `;
+
+const formatter = new Intl.NumberFormat("en-US", {
+  signDisplay: "exceptZero",
+});
 
 const Home = () => {
   const [position, setPosition] = useState<{ x: number; y: number } | null>(
@@ -55,7 +62,12 @@ const Home = () => {
 
   return (
     <Container>
-      <Text variant="bs-bold">Text</Text>
+      <Flex padding="0 0 10 10" pb={10} gap={4} justify="center">
+        <Text>One</Text>
+        <Text>Two</Text>
+        <Text>Three</Text>
+      </Flex>
+      <Chart />
       <Header>
         <TextField
           value="NewYork, United States"
@@ -65,10 +77,10 @@ const Home = () => {
       </Header>
       <WeatherToday>
         <Image src="/images/partly_day_storm_light.png" alt="Cloud Light" />
+        <Text as="h1" variant="xl-medium">
+          {data ? formatter.format(data.hourly.temperature_2m[0]) : null}°
+        </Text>
       </WeatherToday>
-      <Text as="h1" variant="xl-bold">
-        {Array.isArray(data?.hourly) ? data?.hourly.temperature_2m[0] : null}°
-      </Text>
     </Container>
   );
 };
