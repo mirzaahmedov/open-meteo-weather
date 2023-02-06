@@ -1,19 +1,19 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const alignments = {
-  center: "center",
-  start: "flex-start",
-  end: "flex-end",
-  stretch: "stretch",
-  baseline: "baseline",
+  center: 'center',
+  start: 'flex-start',
+  end: 'flex-end',
+  stretch: 'stretch',
+  baseline: 'baseline',
 };
 const justifications = {
-  center: "center",
-  start: "flex-start",
-  end: "flex-end",
-  between: "space-between",
-  around: "space-around",
-  evenly: "space-evenly",
+  center: 'center',
+  start: 'flex-start',
+  end: 'flex-end',
+  between: 'space-between',
+  around: 'space-around',
+  evenly: 'space-evenly',
 };
 
 type CssValue =
@@ -25,7 +25,7 @@ type FlexProps = {
   items?: keyof typeof alignments;
   justify?: keyof typeof justifications;
   gap?: number;
-  direction?: "row" | "column" | "row-reverse" | "column-reverse";
+  direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
   padding?: CssValue;
   pt?: number;
   pb?: number;
@@ -36,6 +36,8 @@ type FlexProps = {
   mb?: number;
   ml?: number;
   mr?: number;
+  rowGap?: number;
+  colGap?: number;
 };
 
 const Flex = styled.div<FlexProps>`
@@ -47,9 +49,9 @@ const Flex = styled.div<FlexProps>`
   padding: ${({ padding }) =>
     padding &&
     padding
-      .split(" ")
+      .split(' ')
       .map((v) => Number(v) * 4)
-      .join("px ") + "px"};
+      .join('px ') + 'px'};
   padding-top: ${({ pt }) => pt && pt * 4}px;
   padding-bottom: ${({ pb }) => pb && pb * 4}px;
   padding-left: ${({ pl }) => pl && pl * 4}px;
@@ -57,13 +59,15 @@ const Flex = styled.div<FlexProps>`
   margin: ${({ margin }) =>
     margin &&
     margin
-      .split(" ")
+      .split(' ')
       .map((v) => Number(v) * 4)
-      .join("px ") + "px"};
+      .join('px ') + 'px'};
   margin-top: ${({ mt }) => mt && mt * 4}px;
   margin-bottom: ${({ mb }) => mb && mb * 4}px;
   margin-left: ${({ ml }) => ml && ml * 4}px;
   margin-right: ${({ mr }) => mr && mr * 4}px;
+  row-gap: ${({ rowGap }) => rowGap && rowGap * 4}px;
+  column-gap: ${({ colGap }) => colGap && colGap * 4}px;
 `;
 
 export default Flex;
