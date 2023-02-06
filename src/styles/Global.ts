@@ -28,6 +28,15 @@ const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.colors.white.main};
     background-color: ${({ theme }) => theme.colors.blue[500]};
   }
+  .tick-label > tspan {
+    font-size: 0.875rem !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: normal !important;
+  }
+  .tick-label > tspan:last-child {
+    font-size: 0.75rem !important;
+    fill: ${({ theme }) => theme.colors.white.transparent} !important;
+  }
 `;
 
 export default GlobalStyles;

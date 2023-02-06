@@ -44,8 +44,6 @@ const Home = () => {
     { enabled: !!position }
   );
 
-  console.log(data);
-
   useEffect(() => {
     window.navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -61,27 +59,29 @@ const Home = () => {
   }, []);
 
   return (
-    <Container>
-      <Flex padding="0 0 10 10" pb={10} gap={4} justify="center">
-        <Text>One</Text>
-        <Text>Two</Text>
-        <Text>Three</Text>
-      </Flex>
+    <>
+      <Container>
+        <Flex padding="0 0 10 10" pb={10} gap={4} justify="center">
+          <Text>One</Text>
+          <Text>Two</Text>
+          <Text>Three</Text>
+        </Flex>
+        <Header>
+          <TextField
+            value="NewYork, United States"
+            onChange={() => {}}
+            icon={<LocationIcon />}
+          />
+        </Header>
+        <WeatherToday>
+          <Image src="/images/partly_day_storm_light.png" alt="Cloud Light" />
+          <Text as="h1" variant="xl-medium">
+            {data ? formatter.format(data.hourly.temperature_2m[0]) : null}°
+          </Text>
+        </WeatherToday>
+      </Container>
       <Chart />
-      <Header>
-        <TextField
-          value="NewYork, United States"
-          onChange={() => {}}
-          icon={<LocationIcon />}
-        />
-      </Header>
-      <WeatherToday>
-        <Image src="/images/partly_day_storm_light.png" alt="Cloud Light" />
-        <Text as="h1" variant="xl-medium">
-          {data ? formatter.format(data.hourly.temperature_2m[0]) : null}°
-        </Text>
-      </WeatherToday>
-    </Container>
+    </>
   );
 };
 
