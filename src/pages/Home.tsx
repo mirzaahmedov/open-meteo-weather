@@ -1,111 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import styled from 'styled-components';
-import Flex from '@/components/Flex';
-import TextField from '@/components/Textfield';
-import Text from '@/components/Text';
-import Chart from '@/components/Chart';
-
-import { LocationIcon } from '@/assets/icons';
-import { getTodaysWeather } from '@/api/queries/forecast';
-import Card from '@/components/Card';
-
-const Container = styled.div`
-  padding: 2.5rem;
-`;
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const WeatherToday = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-const Image = styled.img`
-  display: block;
-  width: 100%;
-  max-width: 150px;
-`;
-
-const formatter = new Intl.NumberFormat('en-US', {
-  signDisplay: 'exceptZero',
-});
+import { getDailyForecastQuery } from "@/api/queries/forecast"
+import { useQuery } from "@tanstack/react-query"
 
 const Home = () => {
-  const [position, setPosition] = useState<{ x: number; y: number } | null>(
-    null,
-  );
+const { data } = useQuery({
+	queryKey: ["daily"],
+	qeuryFn: getDailyForecastQuery,
+	})
+	return (
+			<div>
+				
+			</div>
+			)
+}
 
-  const { data, isLoading, isError } = useQuery(
-    ['weather', position?.x, position?.y],
-    () => getTodaysWeather(position!),
-    { enabled: !!position },
-  );
-
-  useEffect(() => {
-    window.navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setPosition({
-          x: position.coords.latitude,
-          y: position.coords.longitude,
-        });
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
-  }, []);
-
-  return (
-    <>
-      <Container>
-        <Flex padding="0 0 10 10" pb={10} gap={4} justify="center">
-          <Text>One</Text>
-          <Text>Two</Text>
-          <Text>Three</Text>
-        </Flex>
-        <Header>
-          <TextField
-            value="NewYork, United States"
-            onChange={() => {}}
-            icon={<LocationIcon />}
-          />
-        </Header>
-        <WeatherToday>
-          <Image src="/images/partly_day_storm_light.png" alt="Cloud Light" />
-          <Text as="h1" variant="xl-medium">
-            {data ? formatter.format(data.hourly.temperature_2m[0]) : null}°
-          </Text>
-        </WeatherToday>
-        <Card
-          variant="sm"
-          data={{
-            date: 'Mon, 4 Nov',
-            temperature: {
-              daytime: '+19',
-              evening: '-1',
-            },
-            weatherType: 'cloudy',
-          }}
-        />
-        <Card
-          variant="md"
-          data={{
-            date: 'Mon, 4 Nov',
-            temperature: {
-              daytime: '+19',
-              evening: '-1',
-            },
-            weatherType: 'cloudy',
-          }}
-        />
-      </Container>
-      <Chart />
-    </>
-  );
-};
-
-export default Home;
+export default Home

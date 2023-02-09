@@ -1,5 +1,4 @@
 import { SunIcon, SunsetIcon } from '@/assets/icons';
-import React from 'react';
 import styled, { css, useTheme } from 'styled-components';
 import Flex from './Flex';
 import Text from './Text';

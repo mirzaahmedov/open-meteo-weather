@@ -1,21 +1,17 @@
 import api from "../axios";
 
-type TodaysWeatherResponse = {
-  hourly: {
-    temperature_2m: number[];
-  };
-};
+type Params<T> = T & {
+	latitude: string
+	longitude: string
+}
 
-export const getTodaysWeather = async (position: {
-  x: number;
-  y: number;
-}): Promise<TodaysWeatherResponse> => {
-  const { data } = await api.get("forecast", {
-    params: {
-      latitude: position.x,
-      longitude: position.y,
-      hourly: "temperature_2m",
-    },
-  });
-  return data;
-};
+export const getDailyForecastQuery = async () => {
+	const { data } = await api.get("forecast", {			
+		params: {
+			latitude: "41.32",
+			longitude: "69.25",
+			daily: "temperature_2m_min, temperature_2m_max"
+		}
+	})
+	return data
+}
