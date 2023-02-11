@@ -79,7 +79,6 @@ const Chart = () => {
 
   return (
     <div>
-      <svg>
         <defs>
           <filter id="filter" x="0" y="0" width="200%" height="200%">
             <feOffset result="offOut" in="SourceGraphic" dx="2" dy="2" />
@@ -87,7 +86,6 @@ const Chart = () => {
             <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
           </filter>
         </defs>
-      </svg>
       <VictoryChart
         width={width}
         height={400}

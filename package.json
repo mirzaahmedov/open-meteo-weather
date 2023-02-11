@@ -17,6 +17,7 @@
     "react-is": "^18.2.0",
     "react-router-dom": "^6.8.0",
     "styled-components": "^5.3.6",
+    "swiper": "^9.0.4",
     "victory": "^36.6.8"
   },
   "devDependencies": {

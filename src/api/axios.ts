@@ -1,10 +1,10 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 
 const api = axios.create({
   baseURL: "https://api.open-meteo.com/v1/",
 });
 
-api.interceptors.request.use(function(config){
+api.interceptors.request.use(function(config: InternalAxiosRequestConfig){
 	
 	console.log(config)
 

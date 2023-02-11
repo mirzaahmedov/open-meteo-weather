@@ -7,8 +7,8 @@ import Text from './Text';
 interface WeatherData {
   date: string;
   temperature: {
-    daytime: string;
-    evening: string;
+    daytime: number;
+    evening: number;
   };
   weatherType: string;
 }
