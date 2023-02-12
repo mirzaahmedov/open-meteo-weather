@@ -22,6 +22,7 @@ type CssValue =
   | `${number}`;
 
 type FlexProps = {
+  fullWidth?: boolean
   items?: keyof typeof alignments;
   justify?: keyof typeof justifications;
   gap?: number;
@@ -42,9 +43,10 @@ type FlexProps = {
 
 const Flex = styled.div<FlexProps>`
   display: flex;
+  width: ${({ fullWidth }) => fullWidth ? "100%" : "auto"};
   align-items: ${({ items }) => items && alignments[items]};
   justify-content: ${({ justify }) => justify && justifications[justify]};
-  flex-direction: ${({ direction }) => direction};
+  flex-direction: ${({ direction }) => direction && direction};
   gap: ${({ gap = 0 }) => gap * 4}px;
   padding: ${({ padding }) =>
     padding &&
