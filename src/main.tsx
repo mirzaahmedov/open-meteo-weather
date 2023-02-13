@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import GlobalStyles from "@/styles/Global";
-import ThemeProvider from "@/themes/Provider";
+import ThemeProvider from "@/themes/ThemeProvider";
 import Router from "@/routes/Router";
 
 const queryClient = new QueryClient();

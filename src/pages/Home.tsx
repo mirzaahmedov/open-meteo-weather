@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
 
+import useGeolocation from "@/utils/geolocation"
 import { LocationIcon } from "@/assets/icons"
 import Section from "@/components/Section"
 import Flex from "@/components/Flex"
@@ -13,10 +14,13 @@ import Text from "@/components/Text"
 
 
 const Home = () => {
+	const { location } = useGeolocation()
   const { data } = useQuery({
     queryKey: ["daily"],
-    queryFn: getDailyForecastQuery,
+    queryFn: () => getDailyForecastQuery({ location }),
+		enabled: !!location
   })
+
 
   return (
     <main>
