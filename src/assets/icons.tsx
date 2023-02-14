@@ -47,16 +47,16 @@ export const SunIcon = ({ color = 'currentColor', size = 24 }: IconProps) => {
       <path
         d="M12.6934 18.5C14.4173 18.5 16.0706 17.8152 17.2896 16.5962C18.5085 15.3772 19.1934 13.7239 19.1934 12C19.1934 10.2761 18.5085 8.62279 17.2896 7.40381C16.0706 6.18482 14.4173 5.5 12.6934 5.5C10.9695 5.5 9.31615 6.18482 8.09717 7.40381C6.87818 8.62279 6.19336 10.2761 6.19336 12C6.19336 13.7239 6.87818 15.3772 8.09717 16.5962C9.31615 17.8152 10.9695 18.5 12.6934 18.5Z"
         stroke={color}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M19.8334 19.14L19.7034 19.01M19.7034 4.99L19.8334 4.86M5.55336 19.14L5.68336 19.01M12.6934 2.08V2M12.6934 22V21.92M2.77336 12H2.69336M22.6934 12H22.6134M5.68336 4.99L5.55336 4.86"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
