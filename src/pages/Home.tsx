@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
 import useGeolocation from '@/utils/geolocation';
-import { LocationIcon } from '@/assets/icons';
+import { LocationIcon, SunIcon, SunsetIcon, WindIcon } from '@/assets/icons';
 import Section from '@/components/Section';
 import Flex from '@/components/Flex';
 import Card from '@/components/Card';
@@ -31,7 +31,8 @@ const Home = () => {
         </Flex>
         <Flex gap={3} items="center" direction="column">
           <img
-            width="160px"
+            width="240px"
+            height="240px"
             src="/images/partly_day_storm_light.png"
             alt="Cloudy Light"
           />
@@ -39,19 +40,33 @@ const Home = () => {
             Cloudy Lightning
           </Text>
           <Flex justify="center">
-            <Text variant="xxl-medium">20&deg;</Text>
-            <Text color="blue-200" variant="xl-medium">
+            <Text variant="xxl-bold">20&deg;</Text>
+            <Text color="blue-200" variant="lg-normal">
               4&deg;
             </Text>
           </Flex>
-          <Text center variant="bs-normal">
+          <Text center variant="sm-normal" color="white-main">
             Sunday, 3 November
           </Text>
+        </Flex>
+        <Flex colGap={8}>
+          <Flex colGap={2}>
+            <WindIcon />
+            10 km/h
+          </Flex>
+          <Flex colGap={2}>
+            <SunIcon />
+            10 km/h
+          </Flex>
+          <Flex colGap={2}>
+            <SunsetIcon />
+            10 km/h
+          </Flex>
         </Flex>
       </Flex>
       <Section title="Daily">
         <Swiper
-          style={{ padding: '0 20px' }}
+          style={{ padding: '0 10px', overflowY: 'initial', height: '200px' }}
           spaceBetween={10}
           slidesPerView={'auto'}>
           {Array.isArray(data?.daily.time)

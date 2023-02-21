@@ -1,5 +1,4 @@
 import { SunIcon, SunsetIcon } from '@/assets/icons';
-import { getDate } from '@/utils/formatters';
 import styled, { css, useTheme } from 'styled-components';
 import Flex from './Flex';
 import Text from './Text';
@@ -59,7 +58,6 @@ type Props = {
 const CardContainer = styled.div<Props>`
   background: #60a5fa;
   border-radius: 20px;
-
   ${({ variant }) => {
     if (variant === 'md') {
       return css`
@@ -68,7 +66,7 @@ const CardContainer = styled.div<Props>`
     } else {
       return css`
         max-width: 148px;
-        max-height: 180px;
+        max-height: 190px;
         padding: 10px 20px;
       `;
     }
@@ -78,6 +76,7 @@ const CardContainer = styled.div<Props>`
 const CardHead = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   row-gap: 12px;
 `;
 
@@ -96,8 +95,11 @@ const Temperature = styled.div<Props>`
 `;
 
 const WeatherIcon = styled.div<Props>`
-  width: 73.61px;
-  height: 80px;
+  width: 110px;
+  height: 100px;
+  position: relative;
+  top: 10px;
+  z-index: 1000;
 
   ${({ variant }) => {
     if (variant === 'md') {
@@ -109,6 +111,9 @@ const WeatherIcon = styled.div<Props>`
 const Image = styled.img`
   width: 100%;
   height: 100%;
+  position: relative;
+
+  z-index: 1000;
 `;
 
 const DayInfo = styled.div<Props>`
@@ -135,17 +140,17 @@ const Card = (props: Props) => {
         rowGap={2}
         colGap={5}>
         <CardHead>
-          <Text variant="bs-normal" color={colors.blue['200']}>
-            {data.time}
-          </Text>
           <Temperature {...props}>
-            <Text variant="lg-bold" color={colors.white.main}>
+            <Text variant="xl-bold" color="white-main">
               {data.temperature_2m_max}°
             </Text>
-            <Text variant="sm-normal" color={colors.blue[200]}>
+            <Text variant="bs-normal" color="blue-200">
               {data.temperature_2m_min}
             </Text>
           </Temperature>
+          <Text variant="sm-normal" color="blue-200">
+            {data.time}
+          </Text>
         </CardHead>
         <DayInfo {...props}>
           <div>
