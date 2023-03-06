@@ -1,19 +1,33 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import GlobalStyles from "@/styles/Global";
-import ThemeProvider from "@/themes/ThemeProvider";
-import Router from "@/routes/Router";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-const queryClient = new QueryClient();
+import App from "@/App";
+import GlobalStyles from "@/styled/GlobalStyles";
+import ThemeProvider from "@/themes/ThemeProvider";
+import ReactQueryProvider from "@/lib/react-query";
+
+import Home from "@/pages/Home";
+
+const router = createBrowserRouter([
+  {
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
+  },
+])
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
+    <ReactQueryProvider>
       <ThemeProvider>
         <GlobalStyles />
-        <Router />
+        <RouterProvider router={router} />
       </ThemeProvider>
-    </QueryClientProvider>
+    </ReactQueryProvider>
   </React.StrictMode>
 );
