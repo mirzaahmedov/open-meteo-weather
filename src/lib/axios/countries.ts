@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'https://restcountries.com/v3.1',
+  baseURL: 'https://wft-geo-db.p.rapidapi.com/v1',
   headers: {
-    'Content-type': 'application/json'
+    'X-RapidAPI-Key': '20fd38bd15msh123825155ba2b95p1e2b29jsn3ec3d7ce57a0',
+    'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
   }
 })

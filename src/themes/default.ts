@@ -13,12 +13,13 @@ export const theme = {
   },
   font: {
     size: {
-      sm: '0.75rem',
-      bs: '0.875rem',
-      md: '1rem',
-      lg: '1.5rem',
-      xl: '2rem',
-      xxl: '4rem',
+      sm: '12.1px',
+      bs: '16px',
+      md: '20px',
+      lg: '25px',
+      xl: '31.3px',
+      xxl: '39.1px',
+      "4xl": '48.8px',
     },
     weight: {
       normal: 400,

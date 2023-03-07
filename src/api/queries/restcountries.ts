@@ -8,6 +8,7 @@ type CountriesResponseType = {
     svg: string;
   };
   latlng: number[];
+  capital: string[];
 }[];
 
 export const searchCountryByNameQuery = async (name: string) => {

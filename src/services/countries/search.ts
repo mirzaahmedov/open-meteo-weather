@@ -1,18 +1,28 @@
 import axios from "@/lib/axios/countries";
 
 type Country = {
-  name: {
-    common: string;
-  };
-  flags: {
-    svg: string;
-  };
-  latlng: number[];
+  id: number;
+  type: string
+  city: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  country: string;
+  countryCode: string;
+}
+type GeoDBResponse = {
+  data: Country[];
 }
 
-export const queryCountriesByName = async (name: string) => {
-  const { data } = await axios.get<Country[]>(
-    `https://restcountries.com/v3.1/name/${name}`
+export const querySearchCitiesByName = async (name: string) => {
+  const { data: response } = await axios.get<GeoDBResponse>(
+    "geo/cities/",
+    {
+      params: {
+        namePrefix: name,
+        limit: 10,
+      }
+    }
   );
-  return data;
+  return response.data;
 };
