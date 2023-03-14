@@ -12,10 +12,13 @@ type Country = {
 }
 type GeoDBResponse = {
   data: Country[];
+  metadata: {
+    totalCount: number;
+  }
 }
 
 export const querySearchCitiesByName = async (name: string) => {
-  const { data: response } = await axios.get<GeoDBResponse>(
+  const { data } = await axios.get<GeoDBResponse>(
     "geo/cities/",
     {
       params: {
@@ -24,5 +27,5 @@ export const querySearchCitiesByName = async (name: string) => {
       }
     }
   );
-  return response.data;
+  return data;
 };

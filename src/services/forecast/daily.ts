@@ -43,12 +43,14 @@ type DailyWeatherRequest ={
   daily: string
 };
 
+const padding = (num: number) => num.toString().padStart(2, "0")
+
 export const queryDailyForecast = async ({ time, latitude, longitude }: DailyForecastParams) => {
   const date = new Date(time)
-  const start_date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+  const start_date = `${padding(date.getFullYear())}-${padding(date.getMonth() + 1)}-${padding(date.getDate())}`
 
   date.setDate(date.getDate() + 7)
-  const end_date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+  const end_date = `${padding(date.getFullYear())}-${padding(date.getMonth() + 1)}-${padding(date.getDate())}`.padStart(2, "0")
 
   const { data } = await axios.get<DailyWeatherResponse>("forecast", {
     params: {

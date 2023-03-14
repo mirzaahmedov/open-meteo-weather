@@ -1,73 +1,96 @@
-import { FormEvent, useState } from "react";
+import { FormEventHandler, SetStateAction, useState } from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query"
 import { querySearchCitiesByName } from "@/services/countries/search";
 import Text from "@/components/Text";
+import LazyLoadingImage from "@/components/LazyLoadingImage";
+import Loader from "@/assets/Loader";
+import { useSetSearchParam } from "@/utils/searchParams"
 
-const Container = styled.div`
+import SearchField from "./SearchField";
+
+const Container = styled(motion.div)`
+  max-width: 400px;
   overflow: auto;
   position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   height: 100vh;
+  padding: 20px;
   background: #fff;
   color: #000;
 `
-const SearchBox = styled.form`
-  width: 100%;
-  padding: 20px;
-`
-const SearchInput = styled.input`
-  width: 100%;
-  height: 38px;
-  padding: 7px 14px;
-  background: #EFF6FF;
-  border: 2px solid #93C5FD;
-  border-radius: 100px;
-`
 const Countries = styled.ul`
-  padding: 20px;
+  padding: 20px 0;
+  padding-top: 40px;
 `
 const Country = styled.li`
   display: flex;
   align-items: center;
   gap: 30px;
   padding: 10px 10px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.slate[100]};
+  cursor: pointer;
+
+  :hover {
+    background: ${({ theme }) => theme.colors.slate[100]};
+    border: none;
+    border-radius: 8px;
+  }
 `
-const Flag = styled.img`
+const Flag = styled(LazyLoadingImage)`
   width: 30px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1));
 `
 
-const CountrySelect = () => {
-  const [name, setName] = useState("");
-  const [value, setValue] = useState("");
+type Props = {
+  onClose: (val: boolean) => void | SetStateAction<boolean>
+}
+
+const CountrySelect = ({ onClose }: Props) => {
+  const [search, setSearch] = useState("");
 
   const { data: cities, isLoading } = useQuery({
-    queryKey: ["cities", name],
-    queryFn: () => querySearchCitiesByName(name),
-    enabled: name.length > 0,
+    queryKey: ["cities", search],
+    queryFn: () => querySearchCitiesByName(search),
+    enabled: search.length > 0,
+    keepPreviousData: false,
   });
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const setParam = useSetSearchParam()
+
+  const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    setName(value);
+    
+    const [value] = (e.target as HTMLFormElement).elements;
+    setSearch((value as HTMLInputElement).value);
   };
+  const handleSelect = (city: any) => {
+    setParam({
+      latitude: city.latitude,
+      longitude: city.longitude,
+    })
+    onClose(false)
+  }
 
   return (
-    <Container>
-      <SearchBox onSubmit={handleSubmit}>
-          <SearchInput value={value} onChange={e => setValue(e.target.value)} type="text" name="search" />
-      </SearchBox>
-      {isLoading ? (
-        <div>Loading...</div>
+    <Container 
+      transition={{ type: "tween" }} 
+      initial={{ x: "-100%", y: 0 }} 
+      animate={{ x: 0, y: 0 }} 
+    >
+      <SearchField onSubmit={handleSubmit} onClose={onClose} />
+      {isLoading && search.length > 0 ? (
+        <Loader />
       ) : (
         <Countries>
-          {Array.isArray(cities) ? cities.map((city, id) => (
-            <Country key={id}>
-              <Flag src={`https://flagsapi.com/${city.countryCode}/flat/64.png`} alt={city.country} />
-              <Text color="blue-400" as="h3" variant="bs-normal">
-                {city.name},{city.country}
+          {Array.isArray(cities?.data) ? cities?.data.map((city, id) => (
+            <Country key={id} onClick={() => handleSelect(city)}>
+              <Flag placeholder="/images/flag.png" src={`https://flagsapi.com/${city.countryCode}/flat/64.png`} alt={city.country} />
+              <Text color="slate-600" as="h3" variant="bs-normal">
+                <Text as="span" variant="bs-bold">{city.name}</Text>, {city.country}
               </Text>
             </Country>
           )) : null}
