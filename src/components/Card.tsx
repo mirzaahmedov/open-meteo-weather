@@ -1,40 +1,9 @@
 import { SunIcon, SunsetIcon } from '@/assets/icons';
-import styled, { css, useTheme } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { getWeatherIcon } from "@/utils/weather"
+import { getFormattedDate } from "@/utils/date"
 import Flex from './Flex';
 import Text from './Text';
-
-const weatherCodes = {
-  clear: [0],
-  mainly_clear: [1, 2, 3],
-  cloudy: [45, 48],
-  thnderstorm: [95, 96, 99],
-  rainy: [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82],
-  snowy: [71, 73, 75, 77, 85, 86],
-};
-
-const getPath = (code: number): string => {
-  const path = '/images/';
-  if (weatherCodes.clear.includes(code)) {
-    return path + 'slight_touch_happyday_light.png';
-  }
-  if (weatherCodes.mainly_clear.includes(code)) {
-    return path + 'partly_cloudy_light.png';
-  }
-  if (weatherCodes.cloudy.includes(code)) {
-    return path + 'cloudy_light.png';
-  }
-  if (weatherCodes.rainy.includes(code)) {
-    return path + 'rainy_light.png';
-  }
-  if (weatherCodes.snowy.includes(code)) {
-    return path + 'snowy_light.png';
-  }
-  if (weatherCodes.thnderstorm.includes(code)) {
-    return path + 'thnderstorm_light.png';
-  } else {
-    return path + 'slight_touch_happyday_light.png';
-  }
-};
 
 //data types
 interface WeatherData {
@@ -130,7 +99,6 @@ const DayInfo = styled.div<Props>`
 
 const Card = (props: Props) => {
   const { data, variant } = props;
-  const { colors } = useTheme();
 
   return (
     <CardContainer {...props}>
@@ -142,14 +110,14 @@ const Card = (props: Props) => {
         <CardHead>
           <Temperature {...props}>
             <Text variant="xl-bold" color="white-main">
-              {data.temperature_2m_max}°
+              {data.temperature_2m_max > 0 ? "+" : ""}{parseInt(data.temperature_2m_max.toString())}&deg;
             </Text>
             <Text variant="bs-normal" color="blue-200">
-              {data.temperature_2m_min}
+              {data.temperature_2m_min > 0 ? "+" : ""}{parseInt(data.temperature_2m_min.toString())}&deg;
             </Text>
           </Temperature>
-          <Text variant="sm-normal" color="blue-200">
-            {data.time}
+          <Text center variant="sm-normal" color="blue-200">
+            {getFormattedDate(data.time as any)}
           </Text>
         </CardHead>
         <DayInfo {...props}>
@@ -163,7 +131,10 @@ const Card = (props: Props) => {
           </div>
         </DayInfo>
         <WeatherIcon {...props}>
-          <Image src={getPath(data.weathercode)} alt="weather" />
+          <Image 
+            src={`/images/${getWeatherIcon(data.weathercode)}`} 
+            alt="weather" 
+          />
         </WeatherIcon>
       </Flex>
     </CardContainer>

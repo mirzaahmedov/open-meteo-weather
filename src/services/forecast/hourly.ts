@@ -22,10 +22,10 @@ type HourlyWeatherUnits = {
 
 type HourlyWeatherResponse = {
   hourly: HourlyWeatherValues & {
-    time: number[];
+    time: string[];
   };
   hourly_units: HourlyWeatherUnits & {
-    time: number;
+    time: string;
   };
   latitude: string;
   longitude: string;
@@ -41,12 +41,14 @@ type HourlyWeatherRequest ={
   hourly: string
 };
 
-export const queryDailyForecast = async ({ time, latitude, longitude }: HourlyForecastParams) => {
+const pad = (num: number) => num.toString().padStart(2, "0")
+
+export const queryHourlyForecast = async ({ time, latitude, longitude }: HourlyForecastParams) => {
   const date = new Date(time)
-  const start_date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+  const start_date = `${pad(date.getFullYear())}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
 
   date.setDate(date.getDate() + 7)
-  const end_date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+  const end_date = `${pad(date.getFullYear())}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
 
   const { data } = await axios.get<HourlyWeatherResponse>("forecast", {
     params: {

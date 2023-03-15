@@ -25,6 +25,8 @@ type DailyWeatherUnits = {
 type DailyWeatherResponse = {
   daily: DailyWeatherValues & {
     time: number[];
+    sunset: string[];
+    sunrise: string[];
   };
   daily_units: DailyWeatherUnits & {
     time: number;

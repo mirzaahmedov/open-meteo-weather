@@ -25,6 +25,7 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Inter', sans-serif;
   }
   body {
+    margin-top: 40px;
     color: ${({ theme }) => theme.colors.white.main};
     background-color: ${({ theme }) => theme.colors.blue[500]};
   }
@@ -36,6 +37,13 @@ const GlobalStyles = createGlobalStyle`
   .tick-label > tspan:last-child {
     font-size: 0.75rem !important;
     fill: ${({ theme }) => theme.colors.white.transparent} !important;
+  }
+  .swiper-slide {
+    width: 148px;
+    margin-bottom: 20px;
+  }
+  .swiper {
+    margin-left: 0;
   }
 `;
 
