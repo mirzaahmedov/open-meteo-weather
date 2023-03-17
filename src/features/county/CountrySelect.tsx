@@ -21,6 +21,7 @@ const Container = styled(motion.div)`
   padding: 20px;
   background: #fff;
   color: #000;
+  z-index: 100;
 `
 const Countries = styled.ul`
   padding: 20px 0;

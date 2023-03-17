@@ -12,8 +12,13 @@ import {
 import Flex from "@/components/Flex";
 import Text from "@/components/Text";
 import { useWindowSize } from "@/utils/useWindowSize";
-import { useTheme } from "styled-components";
+import styled, { useTheme } from "styled-components";
 
+const Container = styled(Flex)`
+  @media (max-width: 768px) {
+    margin-left: 20px;
+  }
+`;
 
 const Tick = ({ text, ...props }: VictoryLabelProps) => {
   const [time, temperature] = text as [string, number];
@@ -63,7 +68,7 @@ const HourlyForecast = ({ times, temperatures }: Props) => {
 
 
   return (
-    <Flex direction="column" mt={12}>
+    <Container direction="column" mt={12}>
       <Text variant="md-bold">Hourly</Text>
       <svg display={"none"}>
         <defs>
@@ -121,7 +126,7 @@ const HourlyForecast = ({ times, temperatures }: Props) => {
           }}
         />
       </VictoryChart>
-    </Flex>
+    </Container>
   );
 };
 

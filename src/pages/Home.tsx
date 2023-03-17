@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import styled from "styled-components"
+import Text from "@/components/Text"
 import Flex from "@/components/Flex"
 import CountrySelect from "@/features/county/CountrySelect"
 import SelectButton from "@/components/SelectButton"
@@ -21,6 +22,9 @@ const SidePanel = styled(Flex)`
   width: 100%;
 `
 const Container = styled(Flex)`
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 
 const Home = () => {
@@ -60,6 +64,9 @@ const Home = () => {
           <Flex direction="column">
             <DailyForecast data={daily} />
             <HourlyForecast times={hourly?.time} temperatures={hourly?.temperature_2m} />
+          </Flex>
+          <Flex justify="center" padding="5">
+            <Text center variant="bs-normal" color="blue-300">&copy; 2021 Mirzaahmedov.dev</Text>
           </Flex>
         </Container>
       ) : null}

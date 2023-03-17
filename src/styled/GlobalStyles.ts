@@ -25,6 +25,7 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Inter', sans-serif;
   }
   body {
+    font: inherit;
     margin-top: 40px;
     color: ${({ theme }) => theme.colors.white.main};
     background-color: ${({ theme }) => theme.colors.blue[500]};
@@ -41,10 +42,27 @@ const GlobalStyles = createGlobalStyle`
   .swiper-slide {
     width: 148px;
     margin-bottom: 20px;
+    // width: auto;
+    // flex-shrink: 0;
+    // display: block;
+    // height: 100%;
+    // max-height: 100%;
   }
   .swiper {
     margin-left: 0;
   }
+  // .swiper-wrapper {
+  //   max-height: 100%;
+  //   height: 100%;
+  //   display: flex;
+  // }
+  // .swiper-container {
+  //   width: 100%;
+  //   max-width: 100%;
+  //   max-height: 100vh;
+  //   min-width: 0;
+  //   min-height: 0;
+  // }
 `;
 
 export default GlobalStyles;
