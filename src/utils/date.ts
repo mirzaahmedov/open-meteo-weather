@@ -6,8 +6,8 @@ export function getHoursAndMinutes(time: string){
 export function getFormattedDate(time: number, full = false){
   const date = new Date(time);
   return date.toLocaleString('default', {
-    month: full ? 'long' : undefined,
+    month: full ? 'long' : 'short',
     day: 'numeric',
-    weekday: 'long',
+    weekday: full ? 'long' : 'short',
   });
 }

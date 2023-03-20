@@ -10,7 +10,7 @@ const Container = styled(Flex)`
   max-width: 400px;
 `
 const WeatherIcon = styled.img`
-  width: 200px;
+  width: 240px;
 `
 
 type Props = {
@@ -28,12 +28,16 @@ const Today = ({ time, temperatureMin, temperatureMax, wind, weatherCode, sunset
   return (
     <Container mt={10} direction='column' items="center" gap={2}>
       <WeatherIcon src={`/images/${getWeatherIcon(weatherCode)}`} />
-      <Text as="p" color="blue-200" variant="sm-normal">{getWeatherDescription(weatherCode)}</Text>
-      <Flex gap={4}>
-        <Text variant="4xl-bold">{temperatureMax > 0 ? "+" : ""}{temperatureMax}&deg;</Text>
-        <Text variant="lg-normal" color="blue-300">{temperatureMin > 0 ? "+" : ""}{temperatureMin}&deg;</Text>
+      <Flex direction="column" gap={2}>
+        <Text center as="p" color="blue-200" variant="sm-normal">
+          {getWeatherDescription(weatherCode)}
+        </Text>
+        <Flex gap={2}>
+          <Text variant="4xl-bold">{parseInt(temperatureMax.toString())}&deg;</Text>
+          <Text variant="lg-normal" color="blue-300">{parseInt(temperatureMin.toString())}&deg;</Text>
+        </Flex>
+        <Text center variant="sm-normal">{getFormattedDate(time, true)}</Text>
       </Flex>
-      <Text variant="sm-normal">{getFormattedDate(time)}</Text>
       <Flex mt={10} gap={8}>
         <Flex gap={3} items="center">
           <WindIcon /> <Text variant="sm-normal">{wind}km/h</Text>

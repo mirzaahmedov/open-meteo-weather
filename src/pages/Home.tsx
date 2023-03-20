@@ -1,11 +1,12 @@
 import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
+import { AnimatePresence } from "framer-motion"
 import styled from "styled-components"
 import Text from "@/components/Text"
 import Flex from "@/components/Flex"
 import CountrySelect from "@/features/county/CountrySelect"
-import SelectButton from "@/components/SelectButton"
+import Searchfield from "@/components/Searchfield"
 import Today from "@/features/forecast/Today"
 import DailyForecast from "@/features/forecast/DailyForecast"
 import HourlyForecast from "@/features/forecast/HourlyForecast"
@@ -28,7 +29,8 @@ const Container = styled(Flex)`
 `
 
 const Home = () => {
-  const [showCountrySelect, setShowCountrySelect] = useState(false)
+  const [search, setSearch] = useState("")
+  const [showCountrySearch, setShowCountrySearch] = useState(false)
   
   const { time, latitude, longitude } = useOutletContext<OutletContext>()
   const { data: dailyForecast, isLoading } = useQuery({
@@ -47,33 +49,37 @@ const Home = () => {
     <div>
       {isLoading ? "Loading" : daily && hourly ? (
         <Container>
-          <SidePanel direction="column" items="center">
-            <Flex padding="5">
-              <SelectButton onClick={() => setShowCountrySelect(pre => !pre)} />
-            </Flex>
-            <Today 
-              temperatureMax={daily.temperature_2m_max[0]} 
-              temperatureMin={daily.temperature_2m_min[0]} 
-              weatherCode={daily.weathercode[0]} 
-              wind={daily.windspeed_10m_max[0]} 
-              time={time}
-              sunset={daily.sunset[0]} 
-              sunrise={daily.sunrise[0]} 
-            />
-          </SidePanel>
-          <Flex direction="column">
-            <DailyForecast data={daily} />
-            <HourlyForecast times={hourly?.time} temperatures={hourly?.temperature_2m} />
-          </Flex>
+          <AnimatePresence>
+            {showCountrySearch ? (
+              <CountrySelect onClose={setShowCountrySearch} />
+            ) : (
+            <div>
+              <SidePanel direction="column" items="center">
+                <Flex padding="5">
+                  <Searchfield value={search} onChange={e => setSearch((e.target as HTMLInputElement).value)} />
+                </Flex>
+                <Today 
+                  temperatureMax={daily.temperature_2m_max[0]} 
+                  temperatureMin={daily.temperature_2m_min[0]} 
+                  weatherCode={daily.weathercode[0]} 
+                  wind={daily.windspeed_10m_max[0]} 
+                  time={time}
+                  sunset={daily.sunset[0]} 
+                  sunrise={daily.sunrise[0]} 
+                />
+              </SidePanel>
+              <Flex direction="column">
+                <DailyForecast data={daily} />
+                <HourlyForecast times={hourly?.time} temperatures={hourly?.temperature_2m} />
+              </Flex>
+            </div>
+            )}
+          </AnimatePresence>
           <Flex justify="center" padding="5">
             <Text center variant="bs-normal" color="blue-300">&copy; 2021 Mirzaahmedov.dev</Text>
           </Flex>
         </Container>
       ) : null}
-      { showCountrySelect ?
-        <CountrySelect onClose={setShowCountrySelect} />
-        : null
-      }
     </div>
   )
 }

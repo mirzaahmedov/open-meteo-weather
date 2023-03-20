@@ -13,15 +13,9 @@ import SearchField from "./SearchField";
 const Container = styled(motion.div)`
   max-width: 400px;
   overflow: auto;
-  position: fixed;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100vh;
   padding: 20px;
-  background: #fff;
-  color: #000;
-  z-index: 100;
 `
 const Countries = styled.ul`
   padding: 20px 0;
@@ -68,21 +62,10 @@ const CountrySelect = ({ onClose }: Props) => {
     const [value] = (e.target as HTMLFormElement).elements;
     setSearch((value as HTMLInputElement).value);
   };
-  const handleSelect = (city: any) => {
-    setParam({
-      latitude: city.latitude,
-      longitude: city.longitude,
-    })
-    onClose(false)
-  }
 
   return (
     <Container 
-      transition={{ type: "tween" }} 
-      initial={{ x: "-100%", y: 0 }} 
-      animate={{ x: 0, y: 0 }} 
     >
-      <SearchField onSubmit={handleSubmit} onClose={onClose} />
       {isLoading && search.length > 0 ? (
         <Loader />
       ) : (
