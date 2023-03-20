@@ -15,6 +15,12 @@ const Container = styled(Flex)`
   @media (max-width: 768px) {
     margin-top: 40px;
   }
+  .swiper {
+    padding: 0 20px;
+  }
+  & > ${Text} {
+    margin-left: 20px;
+  }
 `
 const SwiperContainer = styled(Flex)`
   width: 100%;
@@ -41,13 +47,13 @@ const DailyForecast = ({ data }: DailyForecastProps) => {
   }, [])
 
   return (
-    <Container padding="5 0 5 5" direction="column" items="start" gap={4}>
+    <Container direction="column" items="start" gap={4}>
       <Text variant="md-bold">Daily</Text>
       <SwiperContainer>
         <Swiper spaceBetween={10} slidesPerView={"auto"}>
             {daily.map((item: any) => (
               <SwiperSlide>
-                <Card variant="sm" data={item} />
+                <Card data={item} />
               </SwiperSlide>
             ))}
         </Swiper>

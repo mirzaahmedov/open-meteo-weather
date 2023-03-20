@@ -15,7 +15,7 @@ import { useWindowSize } from "@/utils/useWindowSize";
 import styled, { useTheme } from "styled-components";
 
 const Container = styled(Flex)`
-  @media (max-width: 768px) {
+  & > ${Text} {
     margin-left: 20px;
   }
 `;

@@ -74,8 +74,8 @@ const Tick = ({ text, ...props }: VictoryLabelProps) => {
 };
 
 const Chart = () => {
-  const { colors } = useTheme();
-  const { width, height } = useWindowSize();
+  const { colors } = useTheme() as any;
+  const { width } = useWindowSize();
 
   return (
     <div>

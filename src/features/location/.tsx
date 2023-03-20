@@ -1,4 +1,3 @@
-import { FormEventHandler, SetStateAction, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query"
@@ -7,8 +6,6 @@ import Text from "@/components/Text";
 import LazyLoadingImage from "@/components/LazyLoadingImage";
 import Loader from "@/assets/Loader";
 import { useSetSearchParam } from "@/utils/searchParams"
-
-import SearchField from "./SearchField";
 
 const Container = styled(motion.div)`
   max-width: 400px;
@@ -41,12 +38,11 @@ const Flag = styled(LazyLoadingImage)`
 `
 
 type Props = {
-  onClose: (val: boolean) => void | SetStateAction<boolean>
+  name: string
+  close: () => void
 }
 
-const CountrySelect = ({ onClose }: Props) => {
-  const [search, setSearch] = useState("");
-
+const CountrySelect = ({ name: search }: Props) => {
   const { data: cities, isLoading } = useQuery({
     queryKey: ["cities", search],
     queryFn: () => querySearchCitiesByName(search),
@@ -56,12 +52,10 @@ const CountrySelect = ({ onClose }: Props) => {
 
   const setParam = useSetSearchParam()
 
-  const handleSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-    
-    const [value] = (e.target as HTMLFormElement).elements;
-    setSearch((value as HTMLInputElement).value);
-  };
+  const handleSelect = ({ latitude, longitude }: any) => {
+    setParam({ latitude, longitude })
+    close()
+  }
 
   return (
     <Container 

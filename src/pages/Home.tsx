@@ -1,12 +1,13 @@
-import { useState } from "react"
+import { useState, FormEventHandler } from "react"
 import { useOutletContext } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import { AnimatePresence } from "framer-motion"
 import styled from "styled-components"
 import Text from "@/components/Text"
 import Flex from "@/components/Flex"
-import CountrySelect from "@/features/county/CountrySelect"
+import ChooseLocation from "@/features/location/ChooseLocation"
 import Searchfield from "@/components/Searchfield"
+import Loader from "@/assets/Loader"
 import Today from "@/features/forecast/Today"
 import DailyForecast from "@/features/forecast/DailyForecast"
 import HourlyForecast from "@/features/forecast/HourlyForecast"
@@ -18,19 +19,28 @@ type OutletContext = {
   latitude: number
   longitude: number
 }
-const SidePanel = styled(Flex)`
+const Aside = styled(Flex)`
   max-width: 400px;
   width: 100%;
+  margin: 0 auto;
 `
 const Container = styled(Flex)`
   @media (max-width: 768px) {
     flex-direction: column;
   }
 `
-
+const Splash = styled(Flex)`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${({ theme }) => theme.colors.blue[500]};
+`
 const Home = () => {
+  const [value, setValue] = useState("")
   const [search, setSearch] = useState("")
-  const [showCountrySearch, setShowCountrySearch] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
   
   const { time, latitude, longitude } = useOutletContext<OutletContext>()
   const { data: dailyForecast, isLoading } = useQuery({
@@ -45,19 +55,35 @@ const Home = () => {
   const daily = dailyForecast?.daily
   const hourly = hourlyForecast?.hourly
 
+  const handleSubmit: FormEventHandler = (e) => {
+    e.preventDefault();
+    
+    const [value] = (e.target as HTMLFormElement).elements;
+    setSearch((value as HTMLInputElement).value);
+  };
+
   return (
     <div>
-      {isLoading ? "Loading" : daily && hourly ? (
+      {isLoading ? (
+        <Splash>
+          <Loader />
+        </Splash>
+      ) : daily && hourly ? (
         <Container>
-          <AnimatePresence>
-            {showCountrySearch ? (
-              <CountrySelect onClose={setShowCountrySearch} />
-            ) : (
-            <div>
-              <SidePanel direction="column" items="center">
-                <Flex padding="5">
-                  <Searchfield value={search} onChange={e => setSearch((e.target as HTMLInputElement).value)} />
-                </Flex>
+          <Aside direction="column">
+            <Flex justify="center" padding="5">
+              <Searchfield 
+                open={isVisible}
+                setOpen={setIsVisible}
+                value={value}
+                onChange={(e) => setValue((e.target as HTMLInputElement).value)} 
+                onSubmit={handleSubmit} 
+              />
+            </Flex>
+            <AnimatePresence>
+              {isVisible ? (
+                <ChooseLocation name={search} close={() => setIsVisible(false)} />
+              ) : (
                 <Today 
                   temperatureMax={daily.temperature_2m_max[0]} 
                   temperatureMin={daily.temperature_2m_min[0]} 
@@ -67,16 +93,15 @@ const Home = () => {
                   sunset={daily.sunset[0]} 
                   sunrise={daily.sunrise[0]} 
                 />
-              </SidePanel>
-              <Flex direction="column">
-                <DailyForecast data={daily} />
-                <HourlyForecast times={hourly?.time} temperatures={hourly?.temperature_2m} />
-              </Flex>
-            </div>
-            )}
-          </AnimatePresence>
-          <Flex justify="center" padding="5">
-            <Text center variant="bs-normal" color="blue-300">&copy; 2021 Mirzaahmedov.dev</Text>
+              )}
+            </AnimatePresence>
+          </Aside>
+          <Flex direction="column">
+            <DailyForecast data={daily} />
+            <HourlyForecast times={hourly?.time} temperatures={hourly?.temperature_2m} />
+            <Flex justify="center" padding="5">
+              <Text center variant="bs-normal" color="blue-300">&copy; 2021 Mirzaahmedov.dev</Text>
+            </Flex>
           </Flex>
         </Container>
       ) : null}

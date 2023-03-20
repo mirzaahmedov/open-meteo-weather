@@ -2,7 +2,7 @@ import { useState, ButtonHTMLAttributes, useEffect } from "react";
 import styled from "styled-components";
 import { ArrowBack, LocationIcon } from "@/assets/icons";
 
-const Container = styled.div`
+const Container = styled.form`
   transition: width 0.3s;
 `;
 const Button = styled.button`
@@ -21,6 +21,7 @@ const Button = styled.button`
   border-radius: 20px;
 `
 const Label = styled.label`
+  cursor: pointer;
   svg {
     display: block;
   }
@@ -42,12 +43,14 @@ const Input = styled.input`
 `;
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+  open: boolean
+  setOpen: (val: boolean) => void
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-const Searchfield = ({ value, onChange, ...props }: Props) => {
-  const [open, setOpen] = useState(false);
+const Searchfield = ({ value, onChange, onSubmit, open, setOpen, ...props }: Props) => {
   const [width, setWidth] = useState(224)
 
   useEffect(() => {
@@ -64,15 +67,15 @@ const Searchfield = ({ value, onChange, ...props }: Props) => {
   }, [])
 
   return (
-    <Container style={{
+    <Container onSubmit={onSubmit} style={{
         width: open ? width : 224,
       }}
     >
       {
         open ? (
-          <Button {...props}>
+          <Button as="div">
             <Label onClick={() => setOpen(false)}><ArrowBack /></Label>
-            <Input onBlur={() => setOpen(false)} type="text" value={value} onChange={onChange} />
+            <Input autoFocus onBlur={() => setOpen(false)} type="text" value={value} onChange={onChange} />
           </Button>
         ) : (
           <Button {...props} onClick={() => setOpen(true)}>

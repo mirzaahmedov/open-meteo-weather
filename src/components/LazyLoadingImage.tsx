@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { ImgHTMLAttributes } from "react";
+import { useState, useEffect, ImgHTMLAttributes } from "react";
+import Loader from "@/assets/Loader";
 
 type Props = ImgHTMLAttributes<HTMLImageElement> & {
   src: string;
@@ -7,7 +7,7 @@ type Props = ImgHTMLAttributes<HTMLImageElement> & {
 }
 
 const LazyLoadingImage = ({ src, placeholder, ...props }: Props) => {
-  const [imgSrc, setImgSrc] = useState(placeholder);
+  const [imgSrc, setImgSrc] = useState<null | string>(null);
 
   useEffect(() => {
     const img = new Image();
@@ -15,9 +15,11 @@ const LazyLoadingImage = ({ src, placeholder, ...props }: Props) => {
     img.onload = () => setImgSrc(src);
   }, [src]);
 
-  return (
-    <img src={imgSrc} {...props} />
-  );
+  return imgSrc !== null ? (
+      <img src={imgSrc} {...props} />
+    ) : (
+      <Loader style={{ fontSize: 24 }} />
+    ) 
 };
 
 export default LazyLoadingImage;
