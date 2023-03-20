@@ -27,8 +27,8 @@ const GlobalStyles = createGlobalStyle`
   body {
     font: inherit;
     margin-top: 40px;
-    color: ${({ theme }) => theme.colors.white.main};
-    background-color: ${({ theme }) => theme.colors.blue[500]};
+    color: ${({ theme }) => (theme as any).colors.white.main};
+    background-color: ${({ theme }) => (theme as any).colors.blue[500]};
   }
   .tick-label > tspan {
     font-size: 0.875rem !important;
@@ -37,7 +37,7 @@ const GlobalStyles = createGlobalStyle`
   }
   .tick-label > tspan:last-child {
     font-size: 0.75rem !important;
-    fill: ${({ theme }) => theme.colors.white.transparent} !important;
+    fill: ${({ theme }) => (theme as any).colors.white.transparent} !important;
   }
   .swiper-slide {
     width: 148px;

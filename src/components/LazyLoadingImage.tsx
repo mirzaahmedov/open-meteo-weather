@@ -3,10 +3,9 @@ import Loader from "@/assets/Loader";
 
 type Props = ImgHTMLAttributes<HTMLImageElement> & {
   src: string;
-  placeholder: string
 }
 
-const LazyLoadingImage = ({ src, placeholder, ...props }: Props) => {
+const LazyLoadingImage = ({ src, ...props }: Props) => {
   const [imgSrc, setImgSrc] = useState<null | string>(null);
 
   useEffect(() => {
