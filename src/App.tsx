@@ -18,7 +18,9 @@ const App = () => {
     
     const newParams = new URLSearchParams()
     if (!time) {
-      newParams.set("time", JSON.stringify(Date.now()))
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+      newParams.set("time", JSON.stringify(today.getTime()))
     }
     if (!latitude || !longitude) {
       window.navigator.geolocation.getCurrentPosition((position) => {

@@ -10,7 +10,7 @@ type DailyForecastProps = {
 }
 
 const Container = styled(Flex)`
-  width: 100%;
+  min-width: 0;
 
   @media (max-width: 768px) {
     margin-top: 40px;
@@ -24,10 +24,7 @@ const Container = styled(Flex)`
 `
 const SwiperContainer = styled(Flex)`
   width: 100%;
-  max-width: 100%;
-  max-height: 100vh;
   min-width: 0;
-  min-height: 0;
 `
 
 const DailyForecast = ({ data }: DailyForecastProps) => {

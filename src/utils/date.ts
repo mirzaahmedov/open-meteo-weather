@@ -11,3 +11,8 @@ export function getFormattedDate(time: number, full = false){
     weekday: full ? 'long' : 'short',
   });
 }
+
+export const getTimeStamp = (time: string) => {
+  const date = new Date(time)
+  return date.getTime()
+}

@@ -81,7 +81,7 @@ const ChooseLocation = ({ name: search, close }: Props) => {
       initial={{ opacity: 0, scale: 0.6 }}
       animate={{ opacity: 1, scale: 1 }}
     >
-      {isLoading ? (
+      {isLoading && search ? (
         <Flex justify="center">
           <Loader />
         </Flex>

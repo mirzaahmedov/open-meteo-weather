@@ -47,7 +47,7 @@ export const queryHourlyForecast = async ({ time, latitude, longitude }: HourlyF
   const date = new Date(time)
   const start_date = `${pad(date.getFullYear())}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
 
-  date.setDate(date.getDate() + 7)
+  date.setDate(date.getDate() + 1)
   const end_date = `${pad(date.getFullYear())}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
 
   const { data } = await axios.get<HourlyWeatherResponse>("forecast", {
