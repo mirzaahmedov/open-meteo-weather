@@ -39,8 +39,8 @@ const App = () => {
         }
         return
       }, {
-          enableHighAccuracy: true,
-          timeout: 5000
+          enableHighAccuracy: false,
+          timeout: 10000,
         })
     } else {
       setSearchParams(newParams)
