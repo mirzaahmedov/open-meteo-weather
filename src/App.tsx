@@ -38,7 +38,10 @@ const App = () => {
           setError("An unknown error occurred.")
         }
         return
-      })
+      }, {
+          enableHighAccuracy: true,
+          timeout: 5000
+        })
     } else {
       setSearchParams(newParams)
     }
