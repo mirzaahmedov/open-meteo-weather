@@ -28,6 +28,21 @@ const Tick = ({ text, ...props }: VictoryLabelProps) => {
   const hours = date.getHours();
   const minutes = date.getMinutes();
 
+  if (time === "Now") {
+    return (
+      <VictoryLabel
+        className="tick-label"
+        text={[
+          `${temperature > 0 ? "+" : temperature < 0 ? "-" : ""}${Math.floor(
+            temperature
+          )}`,
+          `${time}`,
+        ]}
+        {...props}
+      />
+    );
+  }
+
   return (
     <VictoryLabel
       className="tick-label"
@@ -68,7 +83,7 @@ const HourlyForecast = ({ times, temperatures }: Props) => {
 
 
   return (
-    <Container direction="column" mt={12}>
+    <Container direction="column" mt={12} mr={10}>
       <Text variant="md-bold">Hourly</Text>
       <svg display={"none"}>
         <defs>
@@ -112,7 +127,14 @@ const HourlyForecast = ({ times, temperatures }: Props) => {
           tickFormat={(t) => {
             const index = data.findIndex((d: any) => d.x === t);
 
-            if (index > 0 && index < data.length) {
+            if (index >= 0 && index < data.length) {
+               const date = new Date(t)
+               const now = new Date()
+
+               if (now.getHours() === date.getHours()) {
+                  return ["Now", data[index].y]
+               }
+              
                return [t, data[index].y];
             }
 

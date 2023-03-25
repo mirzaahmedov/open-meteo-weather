@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { getWeatherIcon } from "@/utils/weather"
-import { getFormattedDate } from "@/utils/date"
+import { getFormattedDate, getTimeStamp } from "@/utils/date"
+import { useSetSearchParam } from "@/utils/searchParams"
 import Flex from './Flex';
 import Text from './Text';
 
@@ -24,6 +25,7 @@ const Container = styled(Flex)`
   gap: 8px;
   background: #60a5fa;
   border-radius: 20px;
+  cursor: pointer;
 `;
 const Temperature = styled.div`
   display: flex;
@@ -37,12 +39,13 @@ const WeatherIcon = styled.img`
   width: 120px;
 `;
 
-
 const Card = (props: Props) => {
   const { data } = props;
 
+  const setParams = useSetSearchParam()
+
   return (
-    <Container items="center" direction="column">
+    <Container onClick={() => setParams({ time: getTimeStamp(data.time).toString() })} items="center" direction="column">
       <WeatherIcon
           src={`/images/${getWeatherIcon(data.weathercode)}`} 
           alt="weather" 

@@ -1,4 +1,4 @@
-import { useState, FormEventHandler } from "react"
+import { useState, FormEventHandler, useEffect } from "react"
 import { useOutletContext } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import { AnimatePresence } from "framer-motion"
@@ -23,6 +23,10 @@ const Aside = styled(Flex)`
   max-width: 400px;
   width: 100%;
   margin: 0 auto;
+`
+const Main = styled(Flex)`
+  flex: 1;
+  min-width: 0;
 `
 const Container = styled(Flex)`
   @media (max-width: 768px) {
@@ -61,6 +65,13 @@ const Home = () => {
     const [value] = (e.target as HTMLFormElement).elements;
     setSearch((value as HTMLInputElement).value);
   };
+  useEffect(() => {
+    if (!isVisible) {
+      setValue("")
+      setSearch("")
+    }
+  }, [isVisible, search])
+
 
   return (
     <div>
@@ -96,13 +107,13 @@ const Home = () => {
               )}
             </AnimatePresence>
           </Aside>
-          <Flex direction="column">
+          <Main direction="column">
             <DailyForecast data={daily} />
             <HourlyForecast times={hourly?.time} temperatures={hourly?.temperature_2m} />
             <Flex justify="center" padding="5">
               <Text center variant="bs-normal" color="blue-300">&copy; 2021 Mirzaahmedov.dev</Text>
             </Flex>
-          </Flex>
+          </Main>
         </Container>
       ) : null}
     </div>
