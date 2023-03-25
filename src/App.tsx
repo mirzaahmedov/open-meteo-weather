@@ -46,6 +46,22 @@ const App = () => {
       setSearchParams(newParams)
     }
   }, [time, latitude, longitude])
+  useEffect(() => {
+    if (!time) {
+      return
+    }
+
+    const date = Number(time)
+    const today = new Date()
+
+    today.setHours(0, 0, 0, 0)
+
+    if (date - today.getTime() > 7 * 24 * 3600 * 1000) {
+      setError("Please select a date within the next 7 days.")
+    } else {
+      setError(null)
+    }
+  }, [time])
 
   
   if (error) {

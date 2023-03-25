@@ -18,8 +18,7 @@ export const WINDY = 'windy.svg';
 const WEATHER_CODES = [
   { codes: [0], icon: CLEAR_DAY },
   { codes: [1], icon: PARTLY_CLOUDY_DAY },
-  { codes: [2], icon: CLOUDY },
-  { codes: [3], icon: OVERCAST },
+  { codes: [2, 3], icon: CLOUDY },
   { codes: [45,48], icon: FOG },
   { codes: [51, 53, 55], icon: SHOWERS },
   { codes: [56, 57], icon: SLEET },

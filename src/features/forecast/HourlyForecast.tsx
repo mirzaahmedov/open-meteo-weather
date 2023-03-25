@@ -83,7 +83,7 @@ const HourlyForecast = ({ times, temperatures }: Props) => {
 
 
   return (
-    <Container direction="column" mt={12} mr={10}>
+    <Container direction="column" mt={12}>
       <Text variant="md-bold">Hourly</Text>
       <svg display={"none"}>
         <defs>
