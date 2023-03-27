@@ -42,7 +42,7 @@ type DailyWeatherRequest ={
   start_date: string;
   end_date: string;
   timezone: string;
-  daily: string
+  daily: string;
 };
 
 const padding = (num: number) => num.toString().padStart(2, "0")
@@ -61,7 +61,7 @@ export const queryDailyForecast = async ({ time, latitude, longitude }: DailyFor
       start_date,
       end_date,
       timezone: "auto",
-      daily: "temperature_2m_max,temperature_2m_min,weathercode,sunset,sunrise,shortwave_radiation_sum,windspeed_10m_max"
+      daily: "temperature_2m_max,temperature_2m_min,weathercode,sunset,sunrise,shortwave_radiation_sum,windspeed_10m_max",
     } satisfies DailyWeatherRequest,
   });
   return data;

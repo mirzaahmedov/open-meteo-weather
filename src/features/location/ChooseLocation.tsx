@@ -1,13 +1,12 @@
+import { useState } from "react"
 import { MouseEvent as ReactMouseEvent, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query"
 import { querySearchCitiesByName } from "@/services/countries/search";
 import Text from "@/components/Text";
-import Flex from "@/components/Flex";
-import LazyLoadingImage from "@/components/LazyLoadingImage";
-import Loader from "@/assets/Loader";
 import { useSetSearchParam } from "@/utils/searchParams"
+import Skeleton from "@/components/Skeleton";
 
 const Container = styled(motion.div)`
   max-width: 400px;
@@ -33,7 +32,7 @@ const Country = styled.li`
     border-bottom: none;
   }
 `
-const Flag = styled(LazyLoadingImage)`
+const Flag = styled.img`
   width: 30px;
   filter: drop-shadow(0px 5px 10px rgba(255, 255, 255, 0.3));
 `
@@ -44,6 +43,8 @@ type Props = {
 }
 
 const ChooseLocation = ({ name: search, close }: Props) => {
+  const [visible, setVisible] = useState(false)
+
   const { data: locations, isLoading } = useQuery({
     queryKey: ["cities", search],
     queryFn: () => querySearchCitiesByName(search),
@@ -75,30 +76,38 @@ const ChooseLocation = ({ name: search, close }: Props) => {
       document.body.style.overflow = "auto"
     }
   }, [])
+  useEffect(() => {
+    if (isLoading) {
+      setVisible(false)
+    }
+  }, [isLoading])
 
   return (
     <Container 
       initial={{ opacity: 0, scale: 0.6 }}
       animate={{ opacity: 1, scale: 1 }}
     >
-      {isLoading && search ? (
-        <Flex justify="center">
-          <Loader />
-        </Flex>
-      ) : (
-        <Countries>
-          {Array.isArray(locations?.data) ? locations?.data.map((location, id) => (
-            <Country key={id} onMouseDown={(e) => handleSelect(location, e)}>
-              <Flag src={`https://flagsapi.com/${location.countryCode}/flat/64.png`} alt={location.country} />
-              <Text color="white-main" as="h3" variant="bs-normal">
-                <Text as="span" variant="bs-bold">{location.name}</Text>, {location.country}
-              </Text>
-            </Country>
-          )) : null}
-        </Countries>
+      {!visible && search && (
+        <Skeleton.List count={10} vertical>
+          <Country style={{ pointerEvents: "none" }}>
+            <Skeleton width={30} height={30} />
+            <Skeleton height={20} width={200} />
+          </Country>
+        </Skeleton.List>
       )}
+      <Countries onLoad={() => setVisible(true)} style={{ display: visible ? "" : "none" }}>
+        {Array.isArray(locations?.data) ? locations?.data.map((location) => (
+          <Country key={location.id} onMouseDown={(e) => handleSelect(location, e)}>
+            <Flag src={`https://flagsapi.com/${location.countryCode}/flat/64.png`} alt={location.country} />
+            <Text color="white-main" as="h3" variant="bs-normal">
+              <Text as="span" variant="bs-bold">{location.name}</Text>, {location.country}
+            </Text>
+          </Country>
+        )) : null}
+      </Countries>
     </Container>
   );
 };
+
 
 export default ChooseLocation;

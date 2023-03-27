@@ -1,7 +1,6 @@
 import { useState, FormEventHandler, useEffect } from "react"
 import { useOutletContext } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
-import { AnimatePresence } from "framer-motion"
 import styled from "styled-components"
 import Text from "@/components/Text"
 import Flex from "@/components/Flex"
@@ -91,21 +90,18 @@ const Home = () => {
                 onSubmit={handleSubmit} 
               />
             </Flex>
-            <AnimatePresence>
               {isVisible ? (
                 <ChooseLocation name={search} close={() => setIsVisible(false)} />
-              ) : (
-                <Today 
-                  temperatureMax={daily.temperature_2m_max[0]} 
-                  temperatureMin={daily.temperature_2m_min[0]} 
-                  weatherCode={daily.weathercode[0]} 
-                  wind={daily.windspeed_10m_max[0]} 
-                  time={time}
-                  sunset={daily.sunset[0]} 
-                  sunrise={daily.sunrise[0]} 
-                />
-              )}
-            </AnimatePresence>
+              ) : null}
+              <Today 
+                temperatureMax={daily.temperature_2m_max[0]} 
+                temperatureMin={daily.temperature_2m_min[0]} 
+                weatherCode={daily.weathercode[0]} 
+                wind={daily.windspeed_10m_max[0]} 
+                time={time}
+                sunset={daily.sunset[0]} 
+                sunrise={daily.sunrise[0]} 
+              />
           </Aside>
           <Main direction="column">
             <DailyForecast data={daily} />

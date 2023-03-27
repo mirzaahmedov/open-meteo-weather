@@ -32,7 +32,7 @@ const Temperature = styled.div`
   column-gap: 5px;
   margin-top: 10px;
 `;
-const Date = styled(Text)`
+const DateTime = styled(Text)`
   text-transform: uppercase;
 `
 const WeatherIcon = styled.img`
@@ -44,15 +44,24 @@ const Card = (props: Props) => {
 
   const setParams = useSetSearchParam()
 
+  const handleClick = () => {
+    const date = new Date(data.time)
+    const today = new Date()
+
+    if (date.getTime() - today.getTime() > 6 * 24 * 3600 * 1000) return
+
+    setParams({ time: getTimeStamp(data.time).toString() })
+  }
+
   return (
-    <Container onClick={() => setParams({ time: getTimeStamp(data.time).toString() })} items="center" direction="column">
+    <Container onClick={handleClick} items="center" direction="column">
       <WeatherIcon
           src={`/images/${getWeatherIcon(data.weathercode)}`} 
           alt="weather" 
       />
-      <Date center variant="sm-normal" color="blue-200">
+      <DateTime center variant="sm-normal" color="blue-200">
         {getFormattedDate(data.time as any)}
-      </Date>
+      </DateTime>
       <Temperature>
         <Text variant="xxl-bold" color="white-main">
           {parseInt(data.temperature_2m_max.toString())}&deg;
