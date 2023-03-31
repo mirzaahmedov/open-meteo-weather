@@ -1,5 +1,4 @@
-# Weather app
+![weather-app_banner](https://user-images.githubusercontent.com/76392150/229178990-083965ea-2823-40d9-a985-8b315a414354.png)
+# Weather App
 
-![image](https://user-images.githubusercontent.com/76392150/227912378-38850eac-ff3f-49e9-8d74-a0231011656e.png)
-![weather_mockup_01](https://user-images.githubusercontent.com/76392150/227871071-2783a076-cfb5-4530-b2ea-e8d6eb37eb7d.png)
-
+Weather app shows what the weather will be for the next 7 days given any time or location 
