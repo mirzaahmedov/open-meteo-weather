@@ -23,20 +23,20 @@ const App = () => {
       newParams.set("time", JSON.stringify(today.getTime()))
     }
     if (!latitude || !longitude) {
-      alert("running")
       window.navigator.geolocation.getCurrentPosition((position) => {
         newParams.set("latitude", JSON.stringify(position.coords.latitude))
         newParams.set("longitude", JSON.stringify(position.coords.longitude))
         setSearchParams(newParams)
       }, (error) => {
+        alert(error.message)
         if (error.code === error.PERMISSION_DENIED) {
-          setError("Please allow location access to use this app.")
+          setError("ERROR, Please allow location access to use this app.")
         } else if (error.code === error.POSITION_UNAVAILABLE) {
-          setError("Location information is unavailable.")
+          setError("ERROR, Location information is unavailable.")
         } else if (error.code === error.TIMEOUT) {
-          setError("The request to get user location timed out.")
+          setError("ERROR, The request to get user location timed out.")
         } else {
-          setError("An unknown error occurred.")
+          setError("Error, An unknown error occurred.")
         }
       })
     } else {
