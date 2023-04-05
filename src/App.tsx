@@ -17,11 +17,6 @@ const App = () => {
     }
     
     const newParams = new URLSearchParams()
-    if (!time) {
-      const today = new Date()
-      today.setHours(0, 0, 0, 0)
-      newParams.set("time", JSON.stringify(today.getTime()))
-    }
     if (!latitude || !longitude) {
       if (window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition((position) => {
@@ -29,22 +24,25 @@ const App = () => {
           newParams.set("longitude", JSON.stringify(position.coords.longitude))
           setSearchParams(newParams)
         }, (error) => {
-          setError(error.message)
+          if (error.code === error.PERMISSION_DENIED) {
+            setError("Please enable geolocation.")
+          } else if (error.code === error.POSITION_UNAVAILABLE) {
+            setError("Unable to determine your location.")
+          } else if (error.code === error.TIMEOUT) {
+            setError("Unable to determine your location.")
+          } else {
+            setError(error.message)
+          }
         })
       } else {
         setError("Please enable geolocation.")
       }
-      
     } else {
       setSearchParams(newParams)
     }
-  }, [time, latitude, longitude])
+  }, [latitude, longitude])
   useEffect(() => {
-    if (!time) {
-      return
-    }
-
-    const date = Number(time)
+    const date = Number(time || Date.now())
     const today = new Date()
 
     today.setHours(0, 0, 0, 0)
@@ -60,12 +58,12 @@ const App = () => {
   if (error) {
     return <div>{error}</div>
   }
-  if (!time || !latitude || !longitude) {
+  if (!latitude || !longitude) {
     return null
   }
 
   return (
-    <Outlet context={{ time, latitude, longitude }} />
+    <Outlet context={{ time: time || Date.now(), latitude, longitude }} />
   )
 }
 
