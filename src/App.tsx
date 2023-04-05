@@ -23,11 +23,18 @@ const App = () => {
       newParams.set("time", JSON.stringify(today.getTime()))
     }
     if (!latitude || !longitude) {
-      window.navigator.geolocation.getCurrentPosition((position) => {
-        newParams.set("latitude", JSON.stringify(position.coords.latitude))
-        newParams.set("longitude", JSON.stringify(position.coords.longitude))
-        setSearchParams(newParams)
-      })
+      if (window.navigator.geolocation) {
+        window.navigator.geolocation.getCurrentPosition((position) => {
+          newParams.set("latitude", JSON.stringify(position.coords.latitude))
+          newParams.set("longitude", JSON.stringify(position.coords.longitude))
+          setSearchParams(newParams)
+        }, (error) => {
+          setError(error.message)
+        })
+      } else {
+        setError("Please enable geolocation.")
+      }
+      
     } else {
       setSearchParams(newParams)
     }
