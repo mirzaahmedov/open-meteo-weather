@@ -40,7 +40,6 @@ const App = () => {
         return
       }, {
           enableHighAccuracy: false,
-          timeout: 10000,
         })
     } else {
       setSearchParams(newParams)

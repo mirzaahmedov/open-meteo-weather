@@ -1,11 +1,12 @@
-import { useState } from "react"
-import { MouseEvent as ReactMouseEvent, useEffect } from "react";
+import { useState, MouseEvent as ReactMouseEvent, useEffect } from "react"
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query"
-import { querySearchCitiesByName } from "@/services/countries/search";
-import Text from "@/components/Text";
+
 import { useSetSearchParam } from "@/utils/searchParams"
+import { querySearchCitiesByName } from "@/services/countries/search";
+
+import Text from "@/components/Text";
 import Skeleton from "@/components/Skeleton";
 
 const Container = styled(motion.div)`
@@ -89,7 +90,7 @@ const ChooseLocation = ({ name: search, close }: Props) => {
     >
       {!visible && search && (
         <Skeleton.List count={10} vertical>
-          <Country style={{ pointerEvents: "none" }}>
+          <Country style={{ pointerEvents: "none", borderBottom: "none" }}>
             <Skeleton width={30} height={30} />
             <Skeleton height={20} width={200} />
           </Country>
