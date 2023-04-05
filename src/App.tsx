@@ -12,7 +12,7 @@ const App = () => {
   const longitude = JSON.parse(searchParams.get("longitude") || "null")
 
   useEffect(() => {
-    if (time && latitude && longitude) {
+    if (latitude && longitude) {
       return
     }
     
