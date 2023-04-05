@@ -27,18 +27,6 @@ const App = () => {
         newParams.set("latitude", JSON.stringify(position.coords.latitude))
         newParams.set("longitude", JSON.stringify(position.coords.longitude))
         setSearchParams(newParams)
-      }, (error) => {
-        if (error.code === error.PERMISSION_DENIED) {
-          setError("Please allow location access to use this app.")
-        } else if (error.code === error.POSITION_UNAVAILABLE) {
-          setError("Location information is unavailable.")
-        } else if (error.code === error.TIMEOUT) {
-          setError("The request to get user location timed out.")
-        } else {
-          setError("An unknown error occurred.")
-        }
-      }, {
-        enableHighAccuracy: true,
       })
     } else {
       setSearchParams(newParams)
