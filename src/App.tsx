@@ -11,6 +11,28 @@ const App = () => {
   const latitude = JSON.parse(searchParams.get("latitude") || "null")
   const longitude = JSON.parse(searchParams.get("longitude") || "null")
 
+  const getCurrentPosition = (newParams: URLSearchParams) => {
+    if (window.navigator.geolocation) {
+      window.navigator.geolocation.getCurrentPosition((position) => {
+        newParams.set("latitude", JSON.stringify(position.coords.latitude))
+        newParams.set("longitude", JSON.stringify(position.coords.longitude))
+        setSearchParams(newParams)
+      }, (error) => {
+        if (error.code === error.PERMISSION_DENIED) {
+          setError("Please enable geolocation.")
+        } else if (error.code === error.POSITION_UNAVAILABLE) {
+          setError("Unable to determine your location.")
+        } else if (error.code === error.TIMEOUT) {
+          setError("Unable to determine your location.")
+        } else {
+          setError(error.message)
+        }
+      })
+    } else {
+      setError("Please enable geolocation.")
+    }
+  }
+  
   useEffect(() => {
     if (latitude && longitude) {
       return
@@ -18,25 +40,7 @@ const App = () => {
     
     const newParams = new URLSearchParams()
     if (!latitude || !longitude) {
-      if (window.navigator.geolocation) {
-        window.navigator.geolocation.getCurrentPosition((position) => {
-          newParams.set("latitude", JSON.stringify(position.coords.latitude))
-          newParams.set("longitude", JSON.stringify(position.coords.longitude))
-          setSearchParams(newParams)
-        }, (error) => {
-          if (error.code === error.PERMISSION_DENIED) {
-            setError("Please enable geolocation.")
-          } else if (error.code === error.POSITION_UNAVAILABLE) {
-            setError("Unable to determine your location.")
-          } else if (error.code === error.TIMEOUT) {
-            setError("Unable to determine your location.")
-          } else {
-            setError(error.message)
-          }
-        })
-      } else {
-        setError("Please enable geolocation.")
-      }
+      getCurrentPosition(newParams)
     } else {
       setSearchParams(newParams)
     }
@@ -56,7 +60,12 @@ const App = () => {
 
   
   if (error) {
-    return <div>{error}</div>
+    return (
+      <div>
+        {error}
+        <button onClick={() => getCurrentPosition(new URLSearchParams())}>Retry</button>
+      </div>
+    )
   }
   if (!latitude || !longitude) {
     return null
