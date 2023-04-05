@@ -23,12 +23,12 @@ const App = () => {
       newParams.set("time", JSON.stringify(today.getTime()))
     }
     if (!latitude || !longitude) {
+      alert("something")
       window.navigator.geolocation.getCurrentPosition((position) => {
         newParams.set("latitude", JSON.stringify(position.coords.latitude))
         newParams.set("longitude", JSON.stringify(position.coords.longitude))
         setSearchParams(newParams)
       }, (error) => {
-        alert(error.message)
         if (error.code === error.PERMISSION_DENIED) {
           setError("ERROR, Please allow location access to use this app.")
         } else if (error.code === error.POSITION_UNAVAILABLE) {
