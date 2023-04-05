@@ -23,6 +23,7 @@ const App = () => {
       newParams.set("time", JSON.stringify(today.getTime()))
     }
     if (!latitude || !longitude) {
+      alert("running")
       window.navigator.geolocation.getCurrentPosition((position) => {
         newParams.set("latitude", JSON.stringify(position.coords.latitude))
         newParams.set("longitude", JSON.stringify(position.coords.longitude))
@@ -37,10 +38,7 @@ const App = () => {
         } else {
           setError("An unknown error occurred.")
         }
-        return
-      }, {
-          enableHighAccuracy: false,
-        })
+      })
     } else {
       setSearchParams(newParams)
     }
