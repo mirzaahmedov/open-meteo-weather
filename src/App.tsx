@@ -30,13 +30,13 @@ const App = () => {
         setSearchParams(newParams)
       }, (error) => {
         if (error.code === error.PERMISSION_DENIED) {
-          setError("ERROR, Please allow location access to use this app.")
+          setError("Please allow location access to use this app.")
         } else if (error.code === error.POSITION_UNAVAILABLE) {
-          setError("ERROR, Location information is unavailable.")
+          setError("Location information is unavailable.")
         } else if (error.code === error.TIMEOUT) {
-          setError("ERROR, The request to get user location timed out.")
+          setError("The request to get user location timed out.")
         } else {
-          setError("Error, An unknown error occurred.")
+          setError("An unknown error occurred.")
         }
       }, {
         enableHighAccuracy: true,
